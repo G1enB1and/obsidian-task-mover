@@ -1,24 +1,18 @@
 {
-	"name": "obsidian-sample-plugin",
-	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
-	"main": "main.js",
-	"scripts": {
-		"dev": "node esbuild.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
-		"version": "node version-bump.mjs && git add manifest.json versions.json"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "MIT",
-	"devDependencies": {
-		"@types/node": "^16.11.6",
-		"@typescript-eslint/eslint-plugin": "5.29.0",
-		"@typescript-eslint/parser": "5.29.0",
-		"builtin-modules": "3.3.0",
-		"esbuild": "0.17.3",
-		"obsidian": "latest",
-		"tslib": "2.4.0",
-		"typescript": "4.7.4"
-	}
+  "name": "task-mover",
+  "version": "0.0.1",
+  "description": "Move completed tasks to Completed files (on command).",
+  "main": "main.js",
+  "scripts": {
+    "dev": "esbuild main.ts --bundle --outfile=main.js --format=cjs --sourcemap=inline --external:obsidian --watch",
+    "build": "esbuild main.ts --bundle --outfile=main.js --format=cjs --minify --external:obsidian",
+    "copy": "node scripts/copy.js",
+    "dev:vault": "npm-run-all --parallel dev copy",
+    "build:vault": "npm run build && npm run copy"
+  },
+  "devDependencies": {
+    "esbuild": "^0.23.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.4.0"
+  }
 }
