@@ -294,7 +294,12 @@ export default class TaskMoverPlugin extends Plugin {
 
       // Append/prepend into destination
       const destPath = this.completedPathFor(file.path);
-      let destFile = this.app.vault.getAbstractFileByPath(destPath) as TFile | null;
+      const abstractFile = this.app.vault.getAbstractFileByPath(destPath);
+      let destFile: TFile | null = null;
+
+      if (abstractFile instanceof TFile) {
+        destFile = abstractFile;
+      }
 
       if (!destFile) {
         // Create a scaffold header line mirroring the active file’s main header
